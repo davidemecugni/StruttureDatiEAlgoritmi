@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/c,visualstudio
-# Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudio
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,c
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,c
 
 ### C ###
 # Prerequisites
@@ -25,6 +25,11 @@
 *.a
 *.la
 *.lo
+
+# Project files
+*.sln
+*.vcxproj
+*.vcxproj.filters
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -452,4 +457,15 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/c,visualstudio
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,c
+
+### Various files ###
+
+*.html
+*.css
+*.pdf
+*_files/**
+*.png
+*.download
+*.json
+js
