@@ -4,7 +4,7 @@
 #include <string.h>
 //Recursive template of the function
 //p peso, selected_gifts is the current subset, i is the level of the tree, cnt is the number of presents in the current solution, max is the best number of presents found, max_gifts is the best solution 
-void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected_gifts, size_t i, int cnt, int *max, bool* max_gifts ) {
+void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected_gifts, size_t i, size_t cnt, size_t *max, bool* max_gifts ) {
 	int total_weight = 0;
 	for(size_t j = 0; j < i; j++) {
 		if (selected_gifts[j]) {
@@ -50,7 +50,7 @@ void BabboNatale(const int* pacchi, size_t pacchi_size, int p) {
 	}
 	bool* selected_gifts = calloc(pacchi_size, sizeof(bool));
 	bool* max_gifts = calloc(pacchi_size, sizeof(bool));
-	int max = 0;
+	size_t max = 0;
 	//0 for i because it starts at level 0
 	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, 0, 0, &max, max_gifts);
 	if (max_gifts != 0) {
