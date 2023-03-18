@@ -1,4 +1,4 @@
-# Fondamenti Di Informatica 1
+# Strutture Dati e Algoritmi
 
 This repo is a collection of code made in the course "Strutture Dati e Algoritmi" held by prof. Federico Bolelli and prof. Maurizio Vincini during the academic year 2022/2023.
 

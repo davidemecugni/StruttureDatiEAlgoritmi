@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 //Recursive template of the function
-//p peso, selected_gifts is the current subset, i is the level of the tree, cnt is the number of presents in the current solution, max is the best number of presents found, max_gifts is the best solution 
-void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected_gifts, size_t i, size_t cnt, size_t *max, bool* max_gifts ) {
+//p peso, selected_gifts is the current subset, i is the level of the tree, cnt is the number of presents in the current solution, max is the best number of presents found, max_gifts is the best solution , number_of_calls is used to measure the optimisation
+void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected_gifts, size_t i, size_t cnt, size_t *max, bool* max_gifts, size_t *number_of_calls) {
 	int total_weight = 0;
 	for(size_t j = 0; j < i; j++) {
 		if (selected_gifts[j]) {
@@ -17,6 +17,7 @@ void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected
 	if (total_weight > p || cnt + (pacchi_size - i - 1) < *max) {
 		return;
 	}
+
 	//If the solution is perfect
 	if (total_weight == p ) {
 		memcpy(max_gifts, selected_gifts, sizeof(bool) * pacchi_size);
@@ -36,10 +37,12 @@ void BabboNataleRec(const int *pacchi, size_t pacchi_size, int p, bool* selected
 	}
 	//Branch present not in the subset
 	selected_gifts[i] = 0;
-	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, i+1, cnt, max, max_gifts);
+	(*number_of_calls) += 1;
+	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, i+1, cnt, max, max_gifts, number_of_calls);
 	//Branch present in the subset
 	selected_gifts[i] = 1;
-	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, i+1, cnt+1, max, max_gifts);
+	(*number_of_calls) += 1;
+	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, i+1, cnt+1, max, max_gifts, number_of_calls);
 	//Is needed to correctly rollback the branch
 	selected_gifts[i] = 0;
 }
@@ -50,14 +53,16 @@ void BabboNatale(const int* pacchi, size_t pacchi_size, int p) {
 	}
 	bool* selected_gifts = calloc(pacchi_size, sizeof(bool));
 	bool* max_gifts = calloc(pacchi_size, sizeof(bool));
+	size_t number_of_calls = 1;
 	size_t max = 0;
 	//0 for i because it starts at level 0
-	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, 0, 0, &max, max_gifts);
+	BabboNataleRec(pacchi, pacchi_size, p, selected_gifts, 0, 0, &max, max_gifts, &number_of_calls);
 	if (max_gifts != 0) {
 		for (size_t i = 0; i < pacchi_size; i++) {
 			printf("%i ", max_gifts[i]);
 		}
 	}
+	printf("\nCalls: %zi", number_of_calls);
 	free(selected_gifts);
 	free(max_gifts);
 	return;
