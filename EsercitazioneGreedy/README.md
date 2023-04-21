@@ -1,3 +1,3 @@
 # Gone Griddy 
-![](/griddy.gif)
+![](griddy.gif)
 
