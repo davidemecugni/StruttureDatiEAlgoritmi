@@ -54,5 +54,6 @@ Gioiello* CompraGioielli(const char* filename, float budget, size_t* ret_size) {
 		return NULL;
 	}
 	free(gioielli_file);
+	fclose(f);
 	return sol;
 }
