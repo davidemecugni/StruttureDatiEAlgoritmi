@@ -9,5 +9,4 @@ typedef struct {
 	ElemType* data;
 } Vector;
 int VectorFind(const Vector* v, const ElemType* e);
-
 #endif /*VETTORE_H*/
