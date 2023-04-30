@@ -1,7 +1,7 @@
 #include <stdlib.h>
 extern void InsertionSort(int* v, size_t v_size);
 int main(void) {
-	int v[] = { 1 ,12 ,5 ,4 ,3 ,2 ,13 };
-	InsertionSort(v, 7);
+	int v[] = { 5, 3, 7, 9, 8, 1 };
+	InsertionSort(v, 6);
 	return 0;
 }
