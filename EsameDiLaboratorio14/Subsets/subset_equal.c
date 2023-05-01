@@ -57,5 +57,5 @@ void SubsetEqual(int n, int s) {
 
 	SubsetEqualRec(n, s, res, 0, vcurr, 0);
 	free(res);
-	free(vcurr);
+	free(vcurr); 
 }
