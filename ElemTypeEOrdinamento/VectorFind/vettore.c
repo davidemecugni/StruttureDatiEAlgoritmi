@@ -1,38 +1,65 @@
 #include "vettore.h"
 
-int VectorLowerBound(const Vector* v, const ElemType* e, size_t start, size_t stop) {
-	//Test per controllare che non si sia giunti ad un singolo elemento
-	while (start < stop) {
-		size_t mid = (start + stop) / 2;
-		int middle = v->data[mid];
-		//Se l'elemento mid e' quello minore di quello cercato
-		if (ElemCompare(&middle, e) == -1) {
-			start = mid + 1;
+Vector* VectorRead(const char* filename) {
+	FILE* f = fopen(filename, "r");
+	if (f == NULL) {
+		return NULL;
+	}
+	Vector* v = calloc(sizeof(Vector), 1);
+	v->data = calloc(sizeof(ElemType), 1);
+	v->size = 0;
+	v->capacity = 1;
+	int res;
+	while (1) {
+		res = ElemRead(f, &v->data[v->size]);
+		if (res <= 0) {
+			break;
 		}
-		//Se l'elemento mid e' quello minore di quello cercato
-		else {
-			stop = mid;
-		}
+		++(v->size);
+		v->data = realloc(v->data, sizeof(ElemType) * ++(v->capacity));
 	}
-	//Se start = stop e' una posizione prima dell'elemento cercato
-	if (start == stop && ElemCompare(&v->data[start], e) == -1) {
-		start++;
-	}
-
-	// Ritorno l'indice di lower_bound
-	if (start == stop) {
-		return start;
-	}
-	// lower_bound non trovato		
-	else {
-		return -1;
-	}
-
-	
+	v->data = realloc(v->data, sizeof(ElemType) * (v->size));
+	v->capacity = v->size;
+	fclose(f);
+	return v;
 }
-int VectorFind(const Vector* v, const ElemType* e) {
-	if (v == NULL || e== NULL || v->data == NULL || v->size == 0 || v->data == 0) {
-		return -1;
+Vector* VectorReadSorted(const char* filename) {
+	FILE* f = fopen(filename, "r");
+	if (f == NULL) {
+		return NULL;
 	}
-	return VectorBinarySearch(v, e, 0, v->size - 1);
+	Vector* v = calloc(sizeof(Vector), 1);
+	v->data = calloc(sizeof(ElemType), 1);
+	v->size = 0;
+	v->capacity = 1;
+	int res, pos;
+	ElemType tmp;
+	while (1) {
+		res = ElemRead(f, &tmp);
+		if (res <= 0) {
+			break;
+		}
+		pos = -1;
+		for (size_t j = 0; j < v->size; j++) {
+			if (ElemCompare(&v->data[j], &tmp) == 1 || ElemCompare(&v->data[j], &tmp) == 0) {
+				pos = j;
+				break;
+			}
+		}
+		if (pos == -1) {
+			v->data[v->size] = ElemCopy(&tmp);
+		}
+		else {
+			for (int j = v->size; j > pos; j--) {
+				ElemSwap(&v->data[j], &v->data[j - 1]);
+			}
+			v->data[pos] = ElemCopy(&tmp);
+		}
+		++(v->size);
+		v->data = realloc(v->data, sizeof(ElemType) * ++(v->capacity));
+	}
+	v->data = realloc(v->data, sizeof(ElemType) * (v->size));
+	v->capacity = v->size;
+	fclose(f);
+	return v;
 }
