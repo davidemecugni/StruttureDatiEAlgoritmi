@@ -1,6 +1,6 @@
 #include "vettore.h"
 
-int VectorLowerBound(const Vector* v, const ElemType* e, size_t start, size_t stop) {
+int VectorBinarySearch(const Vector* v, const ElemType* e, size_t start, size_t stop) {
 	//Test per controllare che non si sia giunti ad un singolo elemento
 	while (start < stop) {
 		size_t mid = (start + stop) / 2;

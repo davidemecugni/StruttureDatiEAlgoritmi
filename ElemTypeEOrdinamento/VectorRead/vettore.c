@@ -1,28 +1,65 @@
 #include "vettore.h"
-void QuickSort(Vector* v, int start, int stop) {
-	//Controllo per impedire la chiamata continua anche quando dim=1
-	if (start < stop) {
-		int sinistra = start, destra = stop;
-		//Il pivot viene arbitrariamente scelto
-		int pivot = (v->data[start] + v->data[stop] + v->data[(start + stop) / 2]) / 3;
-		do {
-			while (v->data[sinistra] < pivot) sinistra++;
-			while (v->data[destra] > pivot) destra--;
-			if (sinistra <= destra) {
-				ElemSwap(&v->data[sinistra], &v->data[destra]);
-				sinistra++;
-				destra--;
-			}
-		} while (sinistra <= destra);
-		QuickSort(v, start, destra);
-		QuickSort(v, sinistra, stop);
-	}
-	
 
-}
-void VectorSort(Vector* v) {
-	if (v == NULL) {
-		return;
+Vector* VectorRead(const char* filename) {
+	FILE* f = fopen(filename, "r");
+	if (f == NULL) {
+		return NULL;
 	}
-	QuickSort(v, 0, v->size - 1);
+	Vector* v = calloc(sizeof(Vector), 1);
+	v->data = calloc(sizeof(ElemType), 1);
+	v->size = 0;
+	v->capacity = 1;
+	int res;
+	while (1) {
+		res = ElemRead(f, &v->data[v->size]);
+		if (res <= 0) {
+			break;
+		}
+		++(v->size);
+		v->data = realloc(v->data, sizeof(ElemType) * ++(v->capacity));
+	}
+	v->data = realloc(v->data, sizeof(ElemType) * (v->size));
+	v->capacity = v->size;
+	fclose(f);
+	return v;
+}
+Vector* VectorReadSorted(const char* filename) {
+	FILE* f = fopen(filename, "r");
+	if (f == NULL) {
+		return NULL;
+	}
+	Vector* v = calloc(sizeof(Vector), 1);
+	v->data = calloc(sizeof(ElemType), 1);
+	v->size = 0;
+	v->capacity = 1;
+	int res, pos;
+	ElemType tmp;
+	while (1) {
+		res = ElemRead(f, &tmp);
+		if (res <= 0) {
+			break;
+		}
+		pos = -1;
+		for (size_t j = 0; j < v->size; j++) {
+			if (ElemCompare(&v->data[j], &tmp) == 1 || ElemCompare(&v->data[j], &tmp) == 0) {
+				pos = j;
+				break;
+			}
+		}
+		if (pos == -1) {
+			v->data[v->size] = ElemCopy(&tmp);
+		}
+		else {
+			for (int j = v->size; j > pos; j--) {
+				ElemSwap(&v->data[j], &v->data[j - 1]);
+			}
+			v->data[pos] = ElemCopy(&tmp);
+		}
+		++(v->size);
+		v->data = realloc(v->data, sizeof(ElemType) * ++(v->capacity));
+	}
+	v->data = realloc(v->data, sizeof(ElemType) * (v->size));
+	v->capacity = v->size;
+	fclose(f);
+	return v;
 }
