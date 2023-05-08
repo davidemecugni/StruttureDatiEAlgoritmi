@@ -1,24 +1,6 @@
 //Time: embarrassingly more than 2 hours
-//Done 2 implementations wrong
+//Done 2 implementations wrong, went crazy multiple times
 #include "domino.h"
-/*
-//Conflicts with the builtin function in OLJ
-void PrintDomino(const Tessera* t, const Placing *p, size_t n) {
-	if (n == 0) {
-		return;
-	}
-	for (size_t i = 0; i < n; i++) {
-		if (!p[i].flipped) {
-			printf("[ %1d %1d ] ", t[p[i].indice].val1, t[p[i].indice].val2);
-		}
-		else {
-			printf("[ %1d %1d ] ", t[p[i].indice].val2, t[p[i].indice].val1);
-		}
-		
-	}
-	printf("\n");
-}
-*/
 //Returns if the placing is well done(the rules are followed)
 bool IsCorrect(const Tessera* t, const Placing* p, size_t n) {
 	if (n == 0 ) {
