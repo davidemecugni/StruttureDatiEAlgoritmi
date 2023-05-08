@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 typedef struct {
     uint8_t val1;
     uint8_t val2;
