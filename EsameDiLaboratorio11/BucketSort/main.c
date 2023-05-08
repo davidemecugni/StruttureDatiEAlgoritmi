@@ -11,5 +11,6 @@ int main(void) {
 	t = 6;
 	l = ListInsertBack(l, &t);
 	l = BucketSort(l);
+	ListWriteStdout(l);
 	return 0;
 }

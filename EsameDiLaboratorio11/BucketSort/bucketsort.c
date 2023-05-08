@@ -39,11 +39,12 @@ Item* BucketSort(Item* l) {
 		res = ConcatList(res, sorted);
 	}
 	Item* tmp = l;
+	Item* tmp_res = res;
 	ElemType c;
-	while (!ListIsEmpty(res)) {
-		c = ElemCopy(&res->value);
+	while (!ListIsEmpty(tmp_res)) {
+		c = ElemCopy(&tmp_res->value);
 		tmp->value = c;
-		res = ListGetTail(res);
+		tmp_res = ListGetTail(tmp_res);
 		tmp = ListGetTail(tmp);
 	}
 	ListDelete(res);
