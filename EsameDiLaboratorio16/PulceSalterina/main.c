@@ -9,5 +9,6 @@ int main(void) {
 	size_t dim = 0;
 	char* res = GuidaLaPulce(f, 5, a, b, n, h, &dim);
 	free(res);
+	
 	return 0;
 }

@@ -1,4 +1,3 @@
-/*
 #define _CRT_SECURE_NO_WARNINGS
 #include <string.h>
 #include <stdlib.h>
@@ -20,7 +19,7 @@ void GuidaLaPulceRec(const int* f, size_t f_size, int a, int b, int n, int h, si
 		if (lvl < (int)*ret_size) {
 
 			//res = memcpy(res, tmp, n*sizeof(char));
-			for (size_t i = 0; i < *ret_size; i++) {
+			for (size_t i = 0; i < n; i++) {
 				res[i] = tmp[i];
 			}
 			*ret_size = lvl;
@@ -49,64 +48,11 @@ char* GuidaLaPulce(const int* f, size_t f_size, int a, int b, int n, int h, size
 	}
 	*ret_size = (size_t)n + 1;
 	GuidaLaPulceRec(f, f_size, a,  b, n, h,  ret_size, 0, 0, tmp, res);
-	free(tmp);
 	if (*ret_size == ((size_t)n + 1)) {
 		free(res);
 		return NULL;
 	}
 	res = realloc(res, (*ret_size) * sizeof(char));
+	free(tmp);
 	return res;
-}
-*/
-
-#include <stdlib.h>
-#include <string.h>
-static void GuidaLaPulceRec(const int* f, size_t f_size, int a, int b, int n, int h, size_t* ret_size, char* solcurr, int i, int p, size_t count, char* bsol) {
-
-	if (p < 0)
-		return;
-
-	for (size_t j = 0; j < f_size; ++j) {
-		if (p == f[j])
-			return;
-	}
-
-	if (solcurr[i - 1] == 'b') {
-		if (solcurr[i - 2] == 'b')
-			return;
-	}
-
-	if (p == h) {
-		if (count < *ret_size) {
-			memcpy(bsol, solcurr, count * sizeof(char));
-			*ret_size = count;
-		}
-		return;
-	}
-
-	if (i == n)
-		return;
-
-	solcurr[i] = 'a';
-	GuidaLaPulceRec(f, f_size, a, b, n, h, ret_size, solcurr, i + 1, p + a, count + 1, bsol);
-	solcurr[i] = 0;
-
-	solcurr[i] = 'b';
-	GuidaLaPulceRec(f, f_size, a, b, n, h, ret_size, solcurr, i + 1, p - b, count + 1, bsol);
-	solcurr[i] = 0;
-}
-char* GuidaLaPulce(const int* f, size_t f_size, int a, int b, int n, int h, size_t* ret_size) {
-	char* solcurr = calloc(n, sizeof(char));
-	char* bsol = calloc(n, sizeof(char));
-	*ret_size = (size_t)n + 1;
-	GuidaLaPulceRec(f, f_size, a, b, n, h, ret_size, solcurr, 0, 0, 0, bsol);
-	if (*ret_size == (size_t)n + 1) {
-		free(bsol);
-		free(solcurr);
-		*ret_size = 0;
-		return NULL;
-	}
-	free(solcurr);
-	bsol = realloc(bsol, *ret_size * sizeof(char));
-	return bsol;
 }
