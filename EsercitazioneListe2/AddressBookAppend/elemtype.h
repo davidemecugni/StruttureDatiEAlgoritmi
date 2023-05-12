@@ -8,6 +8,7 @@ documentazione delle funzioni a esso associate.
 
 #include <stdbool.h>
 #include <stdio.h>
+
 struct Address {
     char name[40];
     char street[50];
