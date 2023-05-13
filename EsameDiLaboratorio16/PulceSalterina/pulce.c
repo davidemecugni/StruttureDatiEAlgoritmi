@@ -19,7 +19,7 @@ void GuidaLaPulceRec(const int* f, size_t f_size, int a, int b, int n, int h, si
 		if (lvl < (int)*ret_size) {
 
 			//res = memcpy(res, tmp, n*sizeof(char));
-			for (size_t i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++) {
 				res[i] = tmp[i];
 			}
 			*ret_size = lvl;
@@ -29,7 +29,7 @@ void GuidaLaPulceRec(const int* f, size_t f_size, int a, int b, int n, int h, si
 	tmp[lvl] = 'a';
 	GuidaLaPulceRec(f, f_size, a, b, n, h, ret_size, lvl + 1, pos + a, tmp, res);
 	tmp[lvl] = 0;
-	if (tmp[lvl-1]!='b') {
+	if (lvl == 0 || tmp[lvl-1]!='b') {
 		tmp[lvl] = 'b';
 		GuidaLaPulceRec(f, f_size, a, b, n, h, ret_size, lvl + 1, pos - b, tmp, res);
 	}

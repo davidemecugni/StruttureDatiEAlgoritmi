@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+extern char* GuidaLaPulce(const int* f, size_t f_size, int a, int b, int n, int h, size_t* ret_size);
 int main(void) {
 	int f[] = { 12, 4, 7, 1, 15 };
 	int a = 3;
