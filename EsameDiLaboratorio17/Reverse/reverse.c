@@ -1,14 +1,12 @@
 //Time embarrassingly long (>1hr)
 #include "list.h"
-void Swap(ElemType* a, ElemType* b) {
-	ElemType tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
 
 Item* Reverse(Item* i) {
+	//Keeps track of the current element
 	Item* current = i;
+	//Keeps track of the previous element
 	Item* prev = NULL;
+	//Keeps track of the next element
 	Item* next = NULL;
 	while (current != NULL) {
 		next = current->next;
