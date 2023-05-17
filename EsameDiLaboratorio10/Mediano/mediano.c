@@ -1,3 +1,4 @@
+//Time: more than 1hr
 #include "tree.h"
 #include <float.h>
 void NumberOfNodes(const Node* t, int* n) {

@@ -1,3 +1,4 @@
+//Less than 30m
 #include "tree.h"
 
 bool IsomorfiRec(const Node* t1, const Node* t2) {
