@@ -17,12 +17,11 @@ void MedianoRec(const Node *t, int* target, int* lev, double* res, int* count, b
 	if (TreeIsEmpty(t)) {
 		return;
 	}
-	//We esplore the remaining sub-tree
+	//We esplore the left sub-tree
 	MedianoRec(t->left, target, lev, res, count, dispari);
-	MedianoRec(t->right, target, lev, res, count, dispari);
-	//We add the current element to the count
-	*lev += 1;
-	//If we reached the target element(aka the one in the middle)
+	
+	
+	//If we reached the target element(aka the one in the middle of the ordered sequence)
 	if (*lev == (*target)) {
 		//If the total is odd, we just set the result as the central element
 		if (dispari) {
@@ -40,10 +39,15 @@ void MedianoRec(const Node *t, int* target, int* lev, double* res, int* count, b
 				*target += 1;
 				//So that we don't find more than two elements
 				*count += 1;
-				return;
 			}
 		}
 	}
+	//We add one(bc before we tested the current element)
+	*lev += 1;
+	//We explore the right tree
+	MedianoRec(t->right, target, lev, res, count, dispari);
+	
+	
 }
 double Mediano(const Node* t) {
 	if (TreeIsEmpty(t)) {
@@ -59,6 +63,9 @@ double Mediano(const Node* t) {
 	double res = 0.0;
 	int count = 0;
 	//The recursive function
+	if (!dispari) {
+		n -= 1;
+	}
 	MedianoRec(t, &n, &lev, &res, &count, dispari);
 	//If the elements are odd, we just return the central one
 	if (dispari) {

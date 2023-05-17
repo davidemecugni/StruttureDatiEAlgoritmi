@@ -33,7 +33,7 @@ Node* TreeInsertBinOrd(const ElemType* e, Node* n) {
 }
 
 int main(void) {
-    int v[] = { 1,5,2,3,4, 5};
+    int v[] = {3,2,4};
     size_t v_size = sizeof(v) / sizeof(int);
 
     Node* tree = TreeCreateEmpty();
