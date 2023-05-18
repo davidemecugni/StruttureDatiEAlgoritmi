@@ -44,12 +44,15 @@ char* GuidaLaPulce(const int* f, size_t f_size, int a, int b, int n, int h, size
 	if (res == NULL || tmp == NULL) {
 		free(res);
 		free(tmp);
+		*ret_size = 0;
 		return NULL;
 	}
 	*ret_size = (size_t)n + 1;
 	GuidaLaPulceRec(f, f_size, a,  b, n, h,  ret_size, 0, 0, tmp, res);
 	if (*ret_size == ((size_t)n + 1)) {
+		free(tmp);
 		free(res);
+		*ret_size = 0;
 		return NULL;
 	}
 	res = realloc(res, (*ret_size) * sizeof(char));
