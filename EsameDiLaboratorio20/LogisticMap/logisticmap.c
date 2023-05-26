@@ -2,25 +2,25 @@
 #include <stdio.h>
 
 
-float LogisticMap(int i, int n, float r, float x) {
-	if (i + 1 == n) {
-		return r * x * (1 - x);
+double LogisticMap(double x0, int n, double r) {
+	if (n == 0) {
+		return  x0;
 	}
-	return LogisticMap(i + 1, n, r, r * x * (1 - x));
+	return LogisticMap((r * x0) * (1 - x0),n-1, r);
 }
 int main(int argv, char** argc) {
 	if (argv != 4) {
 		return 1;
 	}
 	int res = 0;
-	float x0, r;
+	double x0, r;
 	int n;
-	res = sscanf(argc[1], "%f", &x0);
+	res = sscanf(argc[1], "%lf", &x0);
 	if (res != 1) {
 		return 1;
 	}
 	res = 0;
-	res = sscanf(argc[2], "%f", &r);
+	res = sscanf(argc[2], "%lf", &r);
 	if (res != 1) {
 		return 1;
 	}
@@ -32,8 +32,8 @@ int main(int argv, char** argc) {
 	if (x0 < 0 || x0 > 1 || r < 0 || n < 0) {
 		return 1;
 	}
-	printf("%f", LogisticMap(0, n, r, x0));
+	printf("%lf", LogisticMap(x0,n,r));
 	//0.3 4 52
-	//0.120190
+	//0.721109
 	return 0;
 }
