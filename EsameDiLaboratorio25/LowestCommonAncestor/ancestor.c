@@ -12,18 +12,18 @@ const Node* LowestCommonAncestorRec(const Node* t, const Node* n1, const Node* n
 	if (TreeIsEmpty(t)) {
 		return NULL;
 	}
-	int lvl = 0;
 	const Node* l = NULL;
+	int og = *og_lvl;
 	if (IsIn(TreeLeft(t), n1) && IsIn(TreeLeft(t), n2)) {
-		l = LowestCommonAncestorRec(TreeLeft(t), n1, n2, &lvl);
+		l = LowestCommonAncestorRec(TreeLeft(t), n1, n2, og_lvl);
 	}
-	int l_lvl = lvl;
-	lvl = 0;
+	int l_lvl = *og_lvl;
+	*og_lvl = og;
 	const Node* r = NULL;
-	if (IsIn(TreeLeft(t), n1) && IsIn(TreeLeft(t), n2)) {
-		r = LowestCommonAncestorRec(TreeRight(t), n1, n2, &lvl);
+	if (IsIn(TreeRight(t), n1) && IsIn(TreeRight(t), n2)) {
+		r = LowestCommonAncestorRec(TreeRight(t), n1, n2, og_lvl);
 	}
-	int r_lvl = lvl;
+	int r_lvl = *og_lvl;
 	if (!TreeIsEmpty(l) && !TreeIsEmpty(r)) {
 		if (l_lvl < r_lvl) {
 			return r;
